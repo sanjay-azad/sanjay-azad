@@ -8,8 +8,54 @@
 
 <div>Contact Sanjay:</div></br>
 <form>
-<input type="textarea" placeholder="Say something">
-<button type="submit">Submit</button>
+<input id="txtinput" type="text" placeholder="Say something">
+<button id="btnsubmit" type="submit" onclick="saveToFirebase();">Submit</button>
 </form>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyBAayKL6kLbAyOBziVQF-d8nuNSxQPKpoE",
+    authDomain: "contact-sanjay.firebaseapp.com",
+    projectId: "contact-sanjay",
+    storageBucket: "contact-sanjay.appspot.com",
+    messagingSenderId: "438864460033",
+    appId: "1:438864460033:web:c5fa1e41980fecd7e90300",
+    measurementId: "G-LN5CP3J3JZ"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+
+
+  function saveToFirebase() {
+  	var email = $("#txtinput").val()
+    var emailObject = {
+        email: email
+    };
+
+    firebase.database().ref('subscription-entries').push().set(emailObject)
+        .then(function(snapshot) {
+            success(); // some success method
+        }, function(error) {
+            console.log('error' + error);
+            error(); // some error method
+        });
+  }
+
+  
+  //saveToFirebase(email);
+</script>
+
 </body>
 </html>
